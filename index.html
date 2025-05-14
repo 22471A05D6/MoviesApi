@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		
+		<title>FilMere</title>
+	</head>
+	<body>
+		<header>
+			<div class="logos">
+				<a href="#"
+					><img class="logo" src="./logo.png" alt="FilMere Logo"
+				/></a>
+				
+			</div>
+			<form id="form">
+				<input
+					type="text"
+					placeholder="Search for movie"
+					id="search"
+					class="search"
+				/>
+			</form>
+		</header>
+		<div id="tags"></div>
+		<div id="myNav" class="overlay">
+			
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+				>&times;</a
+			>
+
+			
+			<div class="overlay-content" id="overlay-content"></div>
+
+			<a href="javascript:void(0)" class="arrow left-arrow" id="left-arrow"
+				>&#8656;</a
+			>
+
+			<a href="javascript:void(0)" class="arrow right-arrow" id="right-arrow"
+				>&#8658;</a
+			>
+		</div>
+		<main id="main"></main>
+		<div class="pagination">
+			<div class="page" id="prev">&#8656; Prev</div>
+			<div class="current" id="current">1</div>
+			<div class="page" id="next">Next &#8658;</div>
+		</div>
+
+		
+		<span class="loader"></span>
+		<script src="index.js"></script>
+		<script
+			src="https://kit.fontawesome.com/f7a442f79b.js"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
