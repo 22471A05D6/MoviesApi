@@ -246,49 +246,36 @@ const overlayContent = document.getElementById("overlay-content");
 /* Open when someone clicks on the span element */
 function openNav(movie) {
 	let id = movie.id;
-	fetch(BASE_URL + "/movie/" + id + "/videos?" + API_KEY)
+	fetch(`${BASE_URL}/movie/${id}/videos?${API_KEY}`)
 		.then((res) => res.json())
 		.then((videoData) => {
-			console.log(videoData);
-			if (videoData) {
-				document.getElementById("myNav").style.width = "100%";
-				if (videoData.results.length > 0) {
-					let embed = [];
-					let dots = [];
-					videoData.results.forEach((video, idx) => {
-						let { name, key, site } = video;
+			document.getElementById("myNav").style.width = "100%";
 
-						if (site == "YouTube") {
-							embed.push(`
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" title="${name}" class="embed hide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          
-          `);
+			if (videoData.results.length > 0) {
+				// Get the first YouTube video (usually the trailer)
+				const youtubeVideo = videoData.results.find(
+					(video) => video.site === "YouTube"
+				);
 
-							dots.push(`
-              <span class="dot">${idx + 1}</span>
-            `);
-						}
-					});
+				if (youtubeVideo) {
+					const { name, key } = youtubeVideo;
 
-					let content = `
-        <h1 class="no-results">${movie.original_title}</h1>
-        <br/>
-        
-        ${embed.join("")}
-        <br/>
+					const content = `
+						<h1 class="no-results">${movie.original_title}</h1>
+						<br/>
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" title="${name}" class="embed show" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					`;
 
-        <div class="dots">${dots.join("")}</div>
-        
-        `;
 					overlayContent.innerHTML = content;
-					activeSlide = 0;
-					showVideos();
 				} else {
-					overlayContent.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
+					overlayContent.innerHTML = `<h1 class="no-results">No YouTube Trailer Found</h1>`;
 				}
+			} else {
+				overlayContent.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
 			}
 		});
 }
+
 
 /* Close when someone clicks on the "x" symbol inside the overlay */
 function closeNav() {
